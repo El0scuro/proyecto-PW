@@ -1,0 +1,180 @@
+services:
+
+  # =========================
+  # BACKEND
+  # =========================
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+
+    container_name: proyecto-pw-backend
+
+    restart: unless-stopped
+
+    ports:
+      - "4000:4000"
+
+    env_file:
+      - ./back-end/.env
+
+    depends_on:
+      mysql-sistema:
+        condition: service_healthy
+      mysql-estudiante:
+        condition: service_healthy
+      mysql-secretaria:
+        condition: service_healthy
+      mysql-administrador:
+        condition: service_healthy
+
+    networks:
+      - proyecto-pw-network
+
+
+  # =========================
+  # BASE DE DATOS: SISTEMA
+  # =========================
+  mysql-sistema:
+    image: mysql:8.4
+    container_name: proyecto-pw-mysql-sistema
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: proyecto-pw
+
+    volumes:
+      - mysql_sistema_data:/var/lib/mysql
+      - ./init_sistema.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    networks:
+      - proyecto-pw-network
+
+
+  # =========================
+  # BASE DE DATOS: ESTUDIANTE
+  # =========================
+  mysql-estudiante:
+    image: mysql:8.4
+    container_name: proyecto-pw-mysql-estudiante
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: estudiante-PW
+
+    volumes:
+      - mysql_estudiante_data:/var/lib/mysql
+      - ./init_estudiante.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    networks:
+      - proyecto-pw-network
+
+
+  # =========================
+  # BASE DE DATOS: SECRETARIA
+  # =========================
+  mysql-secretaria:
+    image: mysql:8.4
+    container_name: proyecto-pw-mysql-secretaria
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: secretaria-PW
+
+    volumes:
+      - mysql_secretaria_data:/var/lib/mysql
+      - ./init_secretaria.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    networks:
+      - proyecto-pw-network
+
+
+  # =========================
+  # BASE DE DATOS: ADMINISTRADOR
+  # =========================
+  mysql-administrador:
+    image: mysql:8.4
+    container_name: proyecto-pw-mysql-administrador
+    restart: unless-stopped
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: administrador-PW
+
+    volumes:
+      - mysql_administrador_data:/var/lib/mysql
+      - ./init_administrador.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "-p${MYSQL_ROOT_PASSWORD}"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    networks:
+      - proyecto-pw-network
+
+
+volumes:
+  mysql_sistema_data:
+  mysql_estudiante_data:
+  mysql_secretaria_data:
+  mysql_administrador_data:
+
+
+networks:
+  proyecto-pw-network:
+    driver: bridge
