@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "4000:4000"
+      - "4001:4000"
 
     env_file:
       - ./back-end-relacional/.env
@@ -44,7 +44,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "4001:4000"
+      - "4002:4000"
 
     env_file:
       - ./back-end-no-relacional/.env
