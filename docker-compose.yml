@@ -1,14 +1,14 @@
 services:
 
   # =========================
-  # BACKEND
+  # BACKEND RELACIONAL
   # =========================
-  backend:
+  backend-relacional:
     build:
-      context: ./back-end
+      context: ./back-end-relacional
       dockerfile: Dockerfile
 
-    container_name: proyecto-pw-backend
+    container_name: proyecto-pw-backend-relacional
 
     restart: unless-stopped
 
@@ -16,7 +16,7 @@ services:
       - "4000:4000"
 
     env_file:
-      - ./back-end/.env
+      - ./back-end-relacional/.env
 
     depends_on:
       mysql-sistema:
@@ -31,6 +31,33 @@ services:
     networks:
       - proyecto-pw-network
 
+  # =========================
+  # BACKEND NO RELACIIONAL
+  # =========================
+  backend-no-relacional:
+    build:
+      context: ./back-end-no-relacional
+      dockerfile: Dockerfile
+
+    container_name: proyecto-pw-backend-no-relacional
+
+    restart: unless-stopped
+
+    ports:
+      - "4001:4000"
+
+    env_file:
+      - ./back-end-no-relacional/.env
+
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/proyecto-pw-nosql
+
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+    networks:
+      - proyecto-pw-network
 
   # =========================
   # BASE DE DATOS: SISTEMA
@@ -167,12 +194,42 @@ services:
     networks:
       - proyecto-pw-network
 
+    # =========================
+  # BASE DE DATOS NO RELACIONAL: SISTEMA
+  # =========================
+  mongodb:
+    image: mongo:8
+    container_name: proyecto-pw-nosql-sistema
+    restart: unless-stopped
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongodb_data:/data/db
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "--eval",
+          "db.adminCommand({ ping: 1 }).ok"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+    networks:
+      - proyecto-pw-network
 
 volumes:
   mysql_sistema_data:
   mysql_estudiante_data:
   mysql_secretaria_data:
   mysql_administrador_data:
+  mongodb_data:
 
 
 networks:
