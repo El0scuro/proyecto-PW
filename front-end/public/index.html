@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#003b5c" />
+    <meta
+      name="description"
+      content="Aula UV: consulta de salas, horarios y gestión de clases."
+    />
+    <title>Aula UV</title>
+    <link rel="stylesheet" href="/styles/base.css" />
+    <link rel="stylesheet" href="/styles/layout.css" />
+    <link rel="stylesheet" href="/styles/components.css" />
+    <link rel="stylesheet" href="/styles/responsive.css" />
+    <script type="module" src="/js/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Ir al contenido</a>
+
+    <div id="auth-root"></div>
+
+    <div id="app-shell" hidden>
+      <header class="topbar">
+        <a class="brand" href="#buscar" aria-label="Aula UV, inicio">
+          <img
+            class="brand-logo"
+            src="/assets/logo-uv.png"
+            alt="Universidad de Valparaíso"
+          />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-copy">
+            <strong>Aula UV</strong>
+            <small>Gestión de salas y horarios</small>
+          </span>
+        </a>
+
+        <div class="user-control">
+          <div>
+            <strong id="usuario-activo"></strong>
+            <small id="perfil-activo"></small>
+          </div>
+          <button id="cerrar-sesion" class="secondary" type="button">Cerrar sesión</button>
+        </div>
+      </header>
+
+      <div class="app-layout">
+        <aside class="sidebar">
+          <p class="sidebar-title">Menú principal</p>
+          <nav id="navegacion" aria-label="Principal"></nav>
+
+          <div class="sidebar-note">
+            <span class="status-label">Estado del sistema</span>
+            <span id="modo-api" class="api-status" data-status="checking">
+              Revisando conexión…
+            </span>
+            <small>ICI-324 · Entrega 2</small>
+          </div>
+        </aside>
+
+        <main id="contenido" tabindex="-1">
+          <div id="mensaje" class="message" role="status" aria-live="polite"></div>
+          <div id="app"></div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+@media (max-width: 900px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar nav {
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  }
+
+  .sidebar-note {
+    display: none;
+  }
+
+  .filters,
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    min-height: 78px;
+    padding: 0.45rem 0.85rem;
+  }
+
+  .brand {
+    gap: 0.55rem;
+  }
+
+  .brand-logo {
+    width: 92px;
+    height: 52px;
+  }
+
+  .brand-divider {
+    height: 34px;
+  }
+
+  .brand-copy small {
+    display: none;
+  }
+
+  .profile-control {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .profile-control label {
+    display: none;
+  }
+
+  .profile-control select {
+    min-width: 128px;
+  }
+
+  #contenido {
+    padding: 1.35rem 0.9rem 2.5rem;
+  }
+
+  .page-header {
+    display: block;
+  }
+
+  .filters,
+  .form-grid,
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 470px) {
+  .brand-logo {
+    width: 74px;
+    height: 44px;
+  }
+
+  .brand-divider,
+  .brand-copy small {
+    display: none;
+  }
+
+  .brand-copy strong {
+    font-size: 1rem;
+  }
+
+  .profile-control select {
+    min-width: 118px;
+    max-width: 130px;
+  }
+}
+
+@media print {
+  .topbar,
+  .sidebar,
+  .message,
+  button {
+    display: none !important;
+  }
+
+  .app-layout {
+    display: block;
+  }
+
+  #contenido {
+    width: 100%;
+    padding: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .user-control > div {
+    display: none;
+  }
+
+  .user-control button {
+    min-height: 38px;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .auth-page {
+    align-content: start;
+    padding-top: 1.5rem;
+  }
+
+  .auth-brand {
+    width: min(430px, 100%);
+  }
+
+  .auth-brand img {
+    width: 88px;
+    height: 54px;
+  }
+
+  .auth-card {
+    padding: 1.2rem;
+  }
+
+  .table-actions {
+    min-width: 130px;
+  }
+
+  .table-actions button {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 470px) {
+  .auth-brand span {
+    display: none;
+  }
+
+  .auth-links {
+    display: grid;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-page {
+    padding: 1rem;
+  }
+
+  .auth-card-shell {
+    border-radius: 13px;
+  }
+
+  .auth-visual {
+    min-height: 175px;
+  }
+
+  .auth-campus-mark {
+    width: 82px;
+    height: 52px;
+  }
+
+  .auth-card {
+    padding: 1.35rem 1.2rem 1.45rem;
+  }
+
+  .auth-login-options {
+    align-items: flex-start;
+  }
+}
